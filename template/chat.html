@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Chat with Healthy AI</title>
+  <title>Bob Meal</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -28,7 +28,19 @@
       padding: 10px;
       box-sizing: border-box;
       border: 1px solid #ccc;
-
+    }
+    .copy-button {
+      margin-top: 5px;
+      background-color: #008CBA;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+    }
     }
       #send {
       background-color: #4CAF50;
@@ -40,16 +52,16 @@
   </style>
 </head>
 <body>
-  <h1>Chat with Healthy Assistance (AS)</h1>
-  <h5>Powered by Google AI.</h5>
-<h2>Please be patient while response is being generated</h2>
-
+  <h1>Chat with AI Ride</h1>
+<h5>Powered by <a href="https://www.google.com">Google AI</a>.</h5>
+<h5><a href="https://www.docker.com">Visit docker</a>.</h5>
+  <h2>Please be patient while response is being generated</h2>
   <div class="chatbox" id="chatbox"></div>
-  <input type="text" id="message" placeholder="Type your message here...">
+  <input type="text" id="message" placeholder="From where to where are you heading...">
   <button id="send">Send</button>
-<!-- ... Your existing HTML code ... -->
-
-<script>
+  <a href="https://cabsonlinelaravel.miguelemmara.me/booking"><button class="copy-button">Access shuttle services now and pay later</button></a>
+  <a href="https://newairide-qdd9y4io7-jerryblessed.vercel.app/"><button class="copy-button">Pay for shuttle services</button></a>
+  <script>
     var chatbox = document.getElementById("chatbox");
     var message = document.getElementById("message");
     var send = document.getElementById("send");
@@ -72,8 +84,28 @@
           var botMessage = data.botMessage;
           var botDiv = document.createElement("div");
           botDiv.className = "message bot";
-          botDiv.innerHTML = "<strong>Healthy Assistance:</strong> " + botMessage;
+          botDiv.innerHTML = "<strong>AI Ride:</strong> " + botMessage;
           chatbox.appendChild(botDiv);
+
+          // Create a copy button for the generated text
+          var copyButton = document.createElement("button");
+          copyButton.className = "copy-button";
+          copyButton.innerText = "Pay and ride"; // Change the button text to "Link"
+          copyButton.addEventListener("click", function () {
+            // Copy the generated text to the clipboard
+            var textToCopy = botMessage;
+            var textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            alert("Copied to clipboard: " + textToCopy);
+
+            // Open a new window with the payment link
+            window.open("https://newairide-qdd9y4io7-jerryblessed.vercel.app/", "_blank");
+          });
+          botDiv.appendChild(copyButton); // Add the "Link" button to the bot's response
 
           chatbox.scrollTop = chatbox.scrollHeight;
         });
@@ -89,9 +121,6 @@
 
     // Add a click event listener for the Send button
     send.addEventListener("click", sendMessage);
-</script>
-
-<!-- ... Rest of your HTML code ... -->
+  </script>
 </body>
 </html>
-
