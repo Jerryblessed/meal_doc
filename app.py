@@ -23,6 +23,9 @@ app = Flask(__name__)
 API_KEY = "AIzaSyBgv0a3DuNlGQy6zxarbWHiVJsUIZhy4Bc"
 palm.configure(api_key=API_KEY)
 
+@app.route('/ride')
+def chat():
+    return render_template('ride.html')
 
 @app.route('/')
 def home():
@@ -45,8 +48,8 @@ def chat_with_palm(prompt):
     conversation = []
     if prompt.lower() == "exit":
         return conversation
-# context='Speak like a Doctor and a taxi driver', examples=examples
-    response = palm.chat(messages=prompt, temperature=1, context='Speak like a food specialist, examples=examples )
+# context='Speak like a Doctor and a texi driver', examples=examples
+    response = palm.chat(messages=prompt, temperature=1 )
     for message in response.messages:
         conversation.append({'author': message['author'], 'content': message['content']})
 
