@@ -1,27 +1,12 @@
-# from flask import Flask
-# import os
-
-# app = Flask(__name__)
-
-# @app.route('/')
-# def hello():
-#     return "Hello World!"
-
-# if __name__ == '__main__':
-#     port = os.environ.get('FLASK_PORT') or 8080
-#     port = int(port)
-
-#     app.run(port=port,host='0.0.0.0')
-
-
 from flask import Flask, request, render_template, jsonify
 import google.generativeai as palm
 
 app = Flask(__name__)
 
-# Configure the API key
+# Configure the API key (if necessary)
 API_KEY = "AIzaSyBgv0a3DuNlGQy6zxarbWHiVJsUIZhy4Bc"
-palm.configure(api_key=API_KEY)
+if API_KEY:
+    palm.configure(api_key=API_KEY)
 
 @app.route('/ride')
 def chat():
@@ -36,7 +21,6 @@ def get_response():
     user_message = request.args.get('message')
     conversation = chat_with_palm(user_message)
     bot_response = conversation[-1]['content'] if conversation else "An error occurred."
-
     return jsonify({"botMessage": bot_response})
 
 def chat_with_palm(prompt):
@@ -48,8 +32,14 @@ def chat_with_palm(prompt):
     conversation = []
     if prompt.lower() == "exit":
         return conversation
-# context='Speak like a Doctor and a texi driver', examples=examples
-    response = palm.chat(messages=prompt, temperature=1 )
+
+    # Ensure API key is set if using palm.chat (replace with your API key)
+    if API_KEY:
+        response = palm.chat(messages=prompt, temperature=1.0)
+    else:
+        print("Warning: Missing API key for palm.chat. Response may be inaccurate.")
+        return examples  # Replace with a suitable fallback response
+
     for message in response.messages:
         conversation.append({'author': message['author'], 'content': message['content']})
 
